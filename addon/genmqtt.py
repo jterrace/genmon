@@ -54,6 +54,93 @@ except Exception as e1:
     print("Error: " + str(e1))
     sys.exit(2)
 
+
+ONLINE_PAYLOAD = "Online"
+OFFLINE_PAYLOAD = "Offline"
+
+# Mapping from genmon mqtt topics to how the entity should be represented in Home Assistant.
+# An entity will only be created when the topic is first published.
+# This is likely an incomplete list because it was created by jterrace@ based on a Generac evolution controller.
+# If other people use this, additional topics should be added if found for other controllers.
+HA_SENSOR_MAP = {
+    # --- Status & Outage ---
+    "generator/Outage/Status": {"name": "Outage Status", "json": False, "icon": "mdi:weather-lightning"},
+    "generator/Outage/System In Outage": {"name": "System In Outage", "json": False, "icon": "mdi:weather-lightning"},
+    "generator/Outage/Utility Voltage": {"name": "Outage Utility Voltage", "cls": "voltage", "unit": "V", "json": True},
+    "generator/Outage/Utility Voltage Minimum": {"name": "Outage Utility Min Voltage", "cls": "voltage", "unit": "V", "json": True},
+    "generator/Outage/Utility Voltage Maximum": {"name": "Outage Utility Max Voltage", "cls": "voltage", "unit": "V", "json": True},
+    "generator/Outage/Utility Threshold Voltage": {"name": "Outage Utility Threshold Voltage", "cls": "voltage", "unit": "V", "json": True},
+    "generator/Outage/Utility Pickup Voltage": {"name": "Outage Utility Pickup Voltage", "cls": "voltage", "unit": "V", "json": True},
+    "generator/Outage/Startup Delay": {"name": "Outage Startup Delay", "cls": "duration", "unit": "s", "json": True},
+
+    # --- Engine Status ---
+    "generator/Status/Engine/Battery Voltage": {"name": "Battery Voltage", "cls": "voltage", "unit": "V", "json": True, "icon": "mdi:car-battery"},
+    "generator/Status/Engine/Battery Charger Current": {"name": "Battery Current", "cls": "current", "unit": "mA", "json": True},
+    "generator/Status/Engine/RPM": {"name": "RPM", "unit": "RPM", "json": True, "icon": "mdi:rotate-right"},
+    "generator/Status/Engine/Frequency": {"name": "Frequency", "cls": "frequency", "unit": "Hz", "json": True, "icon": "mdi:sine-wave"},
+    "generator/Status/Engine/Output Voltage": {"name": "Output Voltage", "cls": "voltage", "unit": "V", "json": True},
+    "generator/Status/Engine/Output Current": {"name": "Output Current", "cls": "current", "unit": "A", "json": True},
+    "generator/Status/Engine/Current L1": {"name": "Output Current L1", "cls": "current", "unit": "A", "json": True},
+    "generator/Status/Engine/Current L2": {"name": "Output Current L2", "cls": "current", "unit": "A", "json": True},
+    "generator/Status/Engine/Output Power (Single Phase)": {"name": "Output Power", "cls": "power", "unit": "kW", "json": True, "icon": "mdi:flash"},
+    "generator/Status/Engine/Switch State": {"name": "Switch State", "json": False},
+    "generator/Status/Engine/Engine State": {"name": "Engine State", "json": False, "icon": "mdi:engine"},
+
+    # --- Logs ---
+    "generator/Status/Last Log Entries/Logs/Alarm Log": {"name": "Last Alarm Log", "json": False, "icon": "mdi:alarm-light"},
+    "generator/Status/Last Log Entries/Logs/Run Log": {"name": "Last Action", "json": False, "icon": "mdi:motion-play-outline"},
+
+    # --- Maintenance / Info ---
+    "generator/Maintenance/Model": {"name": "Model", "json": False},
+    "generator/Maintenance/Generator Serial Number": {"name": "Serial Number", "json": False, "icon": "mdi:barcode-scan"},
+    "generator/Maintenance/Controller Detected": {"name": "Controller Detected", "json": False},
+    "generator/Maintenance/Nominal RPM": {"name": "Nominal RPM", "json": False},
+    "generator/Maintenance/Rated kW": {"name": "Capacity", "json": False},
+    "generator/Maintenance/Nominal Frequency": {"name": "Nominal Frequency", "json": False},
+    "generator/Maintenance/Fuel Type": {"name": "Fuel Type", "json": False},
+    "generator/Maintenance/Generator Phase": {"name": "Phase", "json": False},
+    "generator/Maintenance/Engine Displacement": {"name": "Engine Displacement", "unit": "cc", "json": True},
+    "generator/Maintenance/Ambient Temperature Sensor": {"name": "Ambient Temperature", "cls": "temperature", "unit": "°F", "json": True, "icon": "mdi:thermometer"},
+
+    # --- Controller Settings ---
+    "generator/Maintenance/Controller Settings/Calibrate Current 1": {"name": "Controller Calibrate Current 1", "json": True},
+    "generator/Maintenance/Controller Settings/Calibrate Current 2": {"name": "Controller Calibrate Current 2", "json": True},
+    "generator/Maintenance/Controller Settings/Calibrate Volts": {"name": "Controller Calibrate Volts", "json": True},
+    "generator/Maintenance/Controller Settings/Nominal Line Voltage": {"name": "Controller Nominal Line Voltage", "json": False},
+    "generator/Maintenance/Controller Settings/Rated Max Power": {"name": "Controller Rated Max Power", "json": False},
+    "generator/Maintenance/Controller Settings/Hours of Protection": {"name": "Hours of Protection", "cls": "duration", "unit": "h", "json": True},
+
+    # --- Exercise ---
+    "generator/Maintenance/Exercise/Exercise Time": {"name": "Exercise Time", "json": False, "icon": "mdi:refresh-auto"},
+
+    # --- Line Stats ---
+    "generator/Status/Line/Utility Voltage": {"name": "Line Utility Voltage", "cls": "voltage", "unit": "V", "json": True},
+    "generator/Status/Line/Utility Max Voltage": {"name": "Line Utility Max Voltage", "cls": "voltage", "unit": "V", "json": True},
+    "generator/Status/Line/Utility Min Voltage": {"name": "Line Utility Min Voltage", "cls": "voltage", "unit": "V", "json": True},
+    "generator/Status/Line/Utility Threshold Voltage": {"name": "Line Utility Threshold Voltage", "cls": "voltage", "unit": "V", "json": True},
+
+    # --- Service ---
+    "generator/Maintenance/Service/Service A Due": {"name": "Service A Due", "json": False, "icon": "mdi:tools"},
+    "generator/Maintenance/Service/Service B Due": {"name": "Service B Due", "json": False, "icon": "mdi:tools"},
+    "generator/Maintenance/Service/Battery Check Due": {"name": "Service Battery Check Due", "json": False, "icon": "mdi:car-battery"},
+    "generator/Maintenance/Service/Total Run Hours": {"name": "Total Run Time", "cls": "duration", "unit": "h", "json": True, "icon": "mdi:counter"},
+    "generator/Maintenance/Service/Hardware Version": {"name": "Hardware Version", "json": False},
+    "generator/Maintenance/Service/Firmware Version": {"name": "Firmware Version", "json": False},
+
+    # --- Consumption ---
+    "generator/Maintenance/kW Hours in last 30 days": {"name": "Energy Used Last 30 Days", "cls": "energy", "unit": "kWh", "json": True, "icon": "mdi:lightning-bolt"},
+    "generator/Maintenance/Fuel Consumption in last 30 days": {"name": "Fuel Consumption Last 30 Days", "cls": "volume", "unit": "gal", "json": True, "icon": "mdi:fuel"},
+    "generator/Maintenance/Run Hours in last 30 days": {"name": "Run Hours Last 30 Days", "cls": "duration", "unit": "h", "json": True},
+}
+
+
+def _CleanString(s):
+    s = "".join(c if (c.isalnum() or c == "_") else "_" for c in s)
+    while "__" in s:
+        s = s.replace("__", "_")
+    return s.strip("_").lower()
+
+
 # ------------ MyGenPush class --------------------------------------------------
 class MyGenPush(MySupport):
 
@@ -64,6 +151,7 @@ class MyGenPush(MySupport):
         port=ProgramDefaults.ServerPort,
         log=None,
         callback=None,
+        discovery_callback=None,
         polltime=None,
         blacklist=None,
         flush_interval=float("inf"),
@@ -77,6 +165,7 @@ class MyGenPush(MySupport):
 
         super(MyGenPush, self).__init__()
         self.Callback = callback
+        self.DiscoveryCallback = discovery_callback
 
         self.UseNumeric = use_numeric
         self.UseNumericObject = use_numeric_object
@@ -102,6 +191,7 @@ class MyGenPush(MySupport):
         self.LastValues = {}
         self.FlushInterval = flush_interval
         self.LastChange = {}
+        self.DiscoveryPublished = set()
 
         try:
             self.Generator = ClientInterface(host=host, port=port, log=log)
@@ -239,6 +329,15 @@ class MyGenPush(MySupport):
 
                 except Exception as e1:
                     self.LogErrorLine("Unable to get status: " + str(e1))
+
+                if self.DiscoveryCallback is not None:
+                    try:
+                        current_keys = set(self.LastValues.keys())
+                        if current_keys != self.DiscoveryPublished:
+                            self.DiscoveryCallback(current_keys)
+                            self.DiscoveryPublished = current_keys
+                    except Exception as e1:
+                        self.LogErrorLine("Unable to publish to ha: " + str(e1))
 
                 if self.WaitForExit("MainPollingThread", float(self.PollTime)):
                     return
@@ -385,11 +484,32 @@ class MyMQTT(MyCommon):
         self.StringListJson = False
         self.RemoveSpaces = False
         self.Retain = False
+        self.HaDiscovery = False
         self.PollTime = 2
         self.FlushInterval = float(
             "inf"
         )  # default to inifite flush interval (e.g., never)
         self.debug = False
+
+        try:
+            genmon_config = MyConfig(
+                filename=configfilepath + "genmon.conf", section="GenMon"
+            )
+            self.SiteName = genmon_config.ReadValue("sitename", default=None)
+        except Exception as e1:
+            self.LogErrorLine(
+                "Error reading "
+                + os.path.join(configfilepath, "gengenmonmqtt.conf")
+                + " : "
+                + str(e1)
+            )
+            self.console.error(
+                "Error reading "
+                + os.path.join(configfilepath, "genmqtt.conf")
+                + " : "
+                + str(e1)
+            )
+            sys.exit(1)
 
         try:
             config = MyConfig(
@@ -440,6 +560,19 @@ class MyMQTT(MyCommon):
             self.Retain = config.ReadValue(
                 "retain", return_type=bool, default=False
             )
+            self.HaDiscovery = config.ReadValue(
+                "ha_discovery", return_type=bool, default=False
+            )
+
+            if self.HaDiscovery and not self.UseNumericObject:
+                log.error("Error: the JSON for Numerics setting must be enabled if Home Assistant Discovery is enabled")
+                console.error("Error: the JSON for Numerics setting must be enabled if Home Assistant Discovery is enabled")
+                sys.exit(1)
+
+            if self.HaDiscovery and self.UseNumeric:
+                log.error("Error: the Numeric Topics setting must be disabled if Home Assistant Discovery is enabled")
+                console.error("Error: the Numeric Topics setting must be disabled if Home Assistant Discovery is enabled")
+                sys.exit(1)
 
             if self.TopicRoot != None:
                 self.TopicRoot = self.TopicRoot.strip()
@@ -563,7 +696,7 @@ class MyMQTT(MyCommon):
             # setup last will and testament
             self.LastWillTopic = self.AppendRoot("generator/client_status")
             self.MQTTclient.will_set(
-                self.LastWillTopic, payload="Offline", qos=0, retain=True
+                self.LastWillTopic, payload=OFFLINE_PAYLOAD, qos=0, retain=True
             )
             # connect
             self.LogDebug(
@@ -575,12 +708,13 @@ class MyMQTT(MyCommon):
                 host=self.MonitorAddress,
                 log=self.log,
                 callback=self.PublishCallback,
+                discovery_callback=self.SendHaDiscovery if self.HaDiscovery else None,
                 polltime=self.PollTime,
                 blacklist=self.BlackList,
                 flush_interval=self.FlushInterval,
                 use_numeric=self.UseNumeric,
                 use_numeric_object=self.UseNumericObject,
-                strlist_json = self.StringListJson,
+                strlist_json=self.StringListJson,
                 debug=self.debug,
                 port=port,
                 loglocation=loglocation,
@@ -597,7 +731,6 @@ class MyMQTT(MyCommon):
 
     # ------------ MyMQTT::AppendRoot---------------------------------------
     def AppendRoot(self, name):
-
         if self.TopicRoot != None and len(self.TopicRoot):
             ReturnPath = self.TopicRoot + "/" + str(name)
         else:
@@ -634,7 +767,7 @@ class MyMQTT(MyCommon):
         self.LogInfo(
             "Disconnected from " + self.MQTTAddress + " result code: " + str(rc)
         )
-        self.MQTTclient.publish(self.LastWillTopic, payload="Offline", retain=True)
+        self.MQTTclient.publish(self.LastWillTopic, payload=OFFLINE_PAYLOAD, retain=True)
 
     # ------------ MyMQTT::on_connect--------------------------------------------
     # The callback for when the client receives a CONNACK response from the server.
@@ -651,17 +784,72 @@ class MyMQTT(MyCommon):
 
             # Subscribing in on_connect() means that if we lose the connection and
             # reconnect then subscriptions will be renewed.
-            if self.TopicRoot != None and len(self.TopicRoot):
-                FullPath = self.TopicRoot + "/generator"
-            else:
-                FullPath = "generator"
+            FullPath = self.AppendRoot("generator")
             self.MQTTclient.subscribe(FullPath + "/#")
 
             # Setup Last Will value
-            self.MQTTclient.publish(self.LastWillTopic, payload="Online", retain=True)
+            self.MQTTclient.publish(self.LastWillTopic, payload=ONLINE_PAYLOAD, retain=True)
 
         except Exception as e1:
             self.LogErrorLine("Error in MyMQTT:on_connect: " + str(e1))
+
+    def SendHaDiscovery(self, current_keys):
+        clean_sitename = _CleanString(self.SiteName)
+        device_id = f"genmon_{clean_sitename}"
+
+        components = {}
+        for sub_topic, meta in HA_SENSOR_MAP.items():
+            if sub_topic not in current_keys:
+                continue
+            component_key = _CleanString(sub_topic)
+            component_config = {
+                "p": "sensor",
+                "name": meta['name'],
+                "uniq_id": f"{device_id}_{component_key}",
+                "stat_t": self.AppendRoot(sub_topic),
+            }
+
+            if "cls" in meta:
+                component_config["dev_cla"] = meta["cls"]
+            if "unit" in meta:
+                component_config["unit_of_meas"] = meta["unit"]
+            if "icon" in meta:
+                component_config["ic"] = meta["icon"]
+            if meta.get("json", False):
+                component_config["val_tpl"] = "{{ value_json.value }}"
+
+            components[component_key] = component_config
+
+        payload = {
+            "dev": {
+                "ids": [device_id],
+                "name": f"Genmon {clean_sitename}",
+                "mf": "Genmon",
+                "mdl": "Genmon",
+                "sw": ProgramDefaults.GENMON_VERSION
+            },
+            "o": {
+                "name": "Genmon MQTT Addon",
+                "sw": ProgramDefaults.GENMON_VERSION,
+                "url": "https://github.com/jgyates/genmon"
+            },
+            "avty_t": self.LastWillTopic,
+            "pl_avail": ONLINE_PAYLOAD,
+            "pl_not_avail": OFFLINE_PAYLOAD,
+            "cmps": components
+        }
+
+        discovery_topic = f"homeassistant/device/{device_id}/config"
+
+        try:
+            json_payload = json.dumps(payload)
+            self.MQTTclient.publish(discovery_topic, json_payload, retain=True)
+            self.LogInfo(
+                f"MQTT: Sent unified discovery payload ({len(json_payload)} bytes) "
+                f"for {len(components)} entities to {discovery_topic}."
+            )
+        except Exception as e1:
+            self.LogErrorLine("Error in MyMQTT:SendHaDiscovery: " + str(e1))
 
     # ------------ MyMQTT::on_message--------------------------------------------
     # The callback for when a PUBLISH message is received from the server.
@@ -674,10 +862,7 @@ class MyMQTT(MyCommon):
                 )
             # parse topic
             command = str(message.payload.decode("utf-8"))
-            if self.TopicRoot != None and len(self.TopicRoot):
-                FullPath = self.TopicRoot + "/generator/command"
-            else:
-                FullPath = "generator/command"
+            FullPath = self.AppendRoot("generator/command")
 
             if message.topic.lower() != (FullPath.lower()):
                 return
@@ -705,7 +890,6 @@ class MyMQTT(MyCommon):
 
 # -------------------------------------------------------------------------------
 if __name__ == "__main__":
-
     (
         console,
         ConfigFilePath,

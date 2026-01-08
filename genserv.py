@@ -1380,6 +1380,15 @@ def GetAddOns():
             bounds="",
             display_name="Client ID",
         )
+        AddOnCfg["genmqtt"]["parameters"]["ha_discovery"] = CreateAddOnParam(
+            ConfigFiles[GENMQTT_CONFIG].ReadValue(
+                "ha_discovery", return_type=bool, default=False
+            ),
+            "boolean",
+            "If enabled, additional messages will be published to MQTT on startup that conforms to the Home Assistant MQTT Discovery protocol. To use this, Numeric Topics should be OFF and JSON for Numerics should be ON.",
+            bounds="",
+            display_name="Home Assistant Discovery",
+        )
 
         # GENMQTTIN
         AddOnCfg["genmqttin"] = collections.OrderedDict()
