@@ -119,7 +119,6 @@ HA_SENSOR_MAP = {
     "generator/Status/Engine/Battery Charger Current": {
         "name": "Battery Current",
         "dev_cla": "current",
-        "ic": "mdi:car-battery",
         "unit_of_meas": "mA",
         "json": True,
     },
@@ -240,7 +239,7 @@ HA_SENSOR_MAP = {
     "generator/Maintenance/Exercise/Exercise Time": {
         "name": "Exercise Time",
         "ic": "mdi:refresh-auto",
-        "ent_cat": "diagnostic",
+        "ent_cat": "config",
     },
     # --- Line Stats ---
     "generator/Status/Line/Utility Voltage": {
