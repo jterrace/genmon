@@ -66,12 +66,10 @@ HA_SENSOR_MAP = {
     # --- Status & Outage ---
     "generator/Outage/Status": {
         "name": "Outage Status",
-        "json": False,
         "ic": "mdi:weather-lightning",
     },
     "generator/Outage/System In Outage": {
         "name": "System In Outage",
-        "json": False,
         "ic": "mdi:weather-lightning",
     },
     "generator/Outage/Utility Voltage": {
@@ -168,44 +166,38 @@ HA_SENSOR_MAP = {
         "json": True,
         "ic": "mdi:flash",
     },
-    "generator/Status/Engine/Switch State": {"name": "Switch State", "json": False},
+    "generator/Status/Engine/Switch State": {"name": "Switch State"},
     "generator/Status/Engine/Engine State": {
         "name": "Engine State",
-        "json": False,
         "ic": "mdi:engine",
     },
     # --- Logs ---
     "generator/Status/Last Log Entries/Logs/Alarm Log": {
         "name": "Last Alarm Log",
-        "json": False,
         "ic": "mdi:alarm-light",
         "ent_cat": "diagnostic",
     },
     "generator/Status/Last Log Entries/Logs/Run Log": {
         "name": "Last Action",
-        "json": False,
         "ic": "mdi:motion-play-outline",
         "ent_cat": "diagnostic",
     },
     # --- Maintenance / Info ---
-    "generator/Maintenance/Model": {"name": "Model", "json": False},
+    "generator/Maintenance/Model": {"name": "Model"},
     "generator/Maintenance/Generator Serial Number": {
         "name": "Serial Number",
-        "json": False,
         "ic": "mdi:barcode-scan",
     },
     "generator/Maintenance/Controller Detected": {
         "name": "Controller Detected",
-        "json": False,
     },
-    "generator/Maintenance/Nominal RPM": {"name": "Nominal RPM", "json": False},
-    "generator/Maintenance/Rated kW": {"name": "Capacity", "json": False},
+    "generator/Maintenance/Nominal RPM": {"name": "Nominal RPM"},
+    "generator/Maintenance/Rated kW": {"name": "Capacity"},
     "generator/Maintenance/Nominal Frequency": {
         "name": "Nominal Frequency",
-        "json": False,
     },
-    "generator/Maintenance/Fuel Type": {"name": "Fuel Type", "json": False},
-    "generator/Maintenance/Generator Phase": {"name": "Phase", "json": False},
+    "generator/Maintenance/Fuel Type": {"name": "Fuel Type"},
+    "generator/Maintenance/Generator Phase": {"name": "Phase"},
     "generator/Maintenance/Engine Displacement": {
         "name": "Engine Displacement",
         "unit_of_meas": "cc",
@@ -233,11 +225,9 @@ HA_SENSOR_MAP = {
     },
     "generator/Maintenance/Controller Settings/Nominal Line Voltage": {
         "name": "Controller Nominal Line Voltage",
-        "json": False,
     },
     "generator/Maintenance/Controller Settings/Rated Max Power": {
         "name": "Controller Rated Max Power",
-        "json": False,
     },
     "generator/Maintenance/Controller Settings/Hours of Protection": {
         "name": "Hours of Protection",
@@ -248,7 +238,6 @@ HA_SENSOR_MAP = {
     # --- Exercise ---
     "generator/Maintenance/Exercise/Exercise Time": {
         "name": "Exercise Time",
-        "json": False,
         "ic": "mdi:refresh-auto",
         "ent_cat": "diagnostic",
     },
@@ -280,19 +269,16 @@ HA_SENSOR_MAP = {
     # --- Service ---
     "generator/Maintenance/Service/Service A Due": {
         "name": "Service A Due",
-        "json": False,
         "ic": "mdi:tools",
         "ent_cat": "diagnostic",
     },
     "generator/Maintenance/Service/Service B Due": {
         "name": "Service B Due",
-        "json": False,
         "ic": "mdi:tools",
         "ent_cat": "diagnostic",
     },
     "generator/Maintenance/Service/Battery Check Due": {
         "name": "Service Battery Check Due",
-        "json": False,
         "ic": "mdi:car-battery",
         "ent_cat": "diagnostic",
     },
@@ -305,11 +291,9 @@ HA_SENSOR_MAP = {
     },
     "generator/Maintenance/Service/Hardware Version": {
         "name": "Hardware Version",
-        "json": False,
     },
     "generator/Maintenance/Service/Firmware Version": {
         "name": "Firmware Version",
-        "json": False,
     },
     # --- Consumption ---
     "generator/Maintenance/kW Hours in last 30 days": {
