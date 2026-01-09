@@ -113,6 +113,7 @@ HA_SENSOR_MAP = {
         "name": "Battery Voltage",
         "dev_cla": "voltage",
         "unit_of_meas": "V",
+        "sug_dsp_prc": 2,
         "json": True,
         "ic": "mdi:car-battery",
     },
@@ -175,12 +176,12 @@ HA_SENSOR_MAP = {
     "generator/Status/Last Log Entries/Logs/Alarm Log": {
         "name": "Last Alarm Log",
         "ic": "mdi:alarm-light",
-        "entity_category": "diagnostic",
+        "ent_cat": "diagnostic",
     },
     "generator/Status/Last Log Entries/Logs/Run Log": {
         "name": "Last Action",
         "ic": "mdi:motion-play-outline",
-        "entity_category": "diagnostic",
+        "ent_cat": "diagnostic",
     },
     # --- Maintenance / Info ---
     "generator/Maintenance/Model": {"name": "Model"},
@@ -239,7 +240,7 @@ HA_SENSOR_MAP = {
     "generator/Maintenance/Exercise/Exercise Time": {
         "name": "Exercise Time",
         "ic": "mdi:refresh-auto",
-        "entity_category": "diagnostic",
+        "ent_cat": "diagnostic",
     },
     # --- Line Stats ---
     "generator/Status/Line/Utility Voltage": {
@@ -270,17 +271,17 @@ HA_SENSOR_MAP = {
     "generator/Maintenance/Service/Service A Due": {
         "name": "Service A Due",
         "ic": "mdi:tools",
-        "entity_category": "diagnostic",
+        "ent_cat": "diagnostic",
     },
     "generator/Maintenance/Service/Service B Due": {
         "name": "Service B Due",
         "ic": "mdi:tools",
-        "entity_category": "diagnostic",
+        "ent_cat": "diagnostic",
     },
     "generator/Maintenance/Service/Battery Check Due": {
         "name": "Service Battery Check Due",
         "ic": "mdi:car-battery",
-        "entity_category": "diagnostic",
+        "ent_cat": "diagnostic",
     },
     "generator/Maintenance/Service/Total Run Hours": {
         "name": "Total Run Time",
