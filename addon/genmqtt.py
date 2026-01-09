@@ -823,7 +823,7 @@ class MyMQTT(MyCommon):
         payload = {
             "dev": {
                 "ids": [device_id],
-                "name": f"Genmon {clean_sitename}",
+                "name": f"Genmon {self.SiteName}",
                 "mf": "Genmon",
                 "mdl": "Genmon",
                 "sw": ProgramDefaults.GENMON_VERSION
