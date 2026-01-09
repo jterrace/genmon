@@ -64,73 +64,274 @@ OFFLINE_PAYLOAD = "Offline"
 # If other people use this, additional topics should be added if found for other controllers.
 HA_SENSOR_MAP = {
     # --- Status & Outage ---
-    "generator/Outage/Status": {"name": "Outage Status", "json": False, "icon": "mdi:weather-lightning"},
-    "generator/Outage/System In Outage": {"name": "System In Outage", "json": False, "icon": "mdi:weather-lightning"},
-    "generator/Outage/Utility Voltage": {"name": "Outage Utility Voltage", "cls": "voltage", "unit": "V", "json": True},
-    "generator/Outage/Utility Voltage Minimum": {"name": "Outage Utility Min Voltage", "cls": "voltage", "unit": "V", "json": True},
-    "generator/Outage/Utility Voltage Maximum": {"name": "Outage Utility Max Voltage", "cls": "voltage", "unit": "V", "json": True},
-    "generator/Outage/Utility Threshold Voltage": {"name": "Outage Utility Threshold Voltage", "cls": "voltage", "unit": "V", "json": True},
-    "generator/Outage/Utility Pickup Voltage": {"name": "Outage Utility Pickup Voltage", "cls": "voltage", "unit": "V", "json": True},
-    "generator/Outage/Startup Delay": {"name": "Outage Startup Delay", "cls": "duration", "unit": "s", "json": True},
-
+    "generator/Outage/Status": {
+        "name": "Outage Status",
+        "json": False,
+        "ic": "mdi:weather-lightning",
+    },
+    "generator/Outage/System In Outage": {
+        "name": "System In Outage",
+        "json": False,
+        "ic": "mdi:weather-lightning",
+    },
+    "generator/Outage/Utility Voltage": {
+        "name": "Outage Utility Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+    },
+    "generator/Outage/Utility Voltage Minimum": {
+        "name": "Outage Utility Min Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+    },
+    "generator/Outage/Utility Voltage Maximum": {
+        "name": "Outage Utility Max Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+    },
+    "generator/Outage/Utility Threshold Voltage": {
+        "name": "Outage Utility Threshold Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+    },
+    "generator/Outage/Utility Pickup Voltage": {
+        "name": "Outage Utility Pickup Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+    },
+    "generator/Outage/Startup Delay": {
+        "name": "Outage Startup Delay",
+        "dev_cla": "duration",
+        "unit_of_meas": "s",
+        "json": True,
+    },
     # --- Engine Status ---
-    "generator/Status/Engine/Battery Voltage": {"name": "Battery Voltage", "cls": "voltage", "unit": "V", "json": True, "icon": "mdi:car-battery"},
-    "generator/Status/Engine/Battery Charger Current": {"name": "Battery Current", "cls": "current", "unit": "mA", "json": True},
-    "generator/Status/Engine/RPM": {"name": "RPM", "unit": "RPM", "json": True, "icon": "mdi:rotate-right"},
-    "generator/Status/Engine/Frequency": {"name": "Frequency", "cls": "frequency", "unit": "Hz", "json": True, "icon": "mdi:sine-wave"},
-    "generator/Status/Engine/Output Voltage": {"name": "Output Voltage", "cls": "voltage", "unit": "V", "json": True},
-    "generator/Status/Engine/Output Current": {"name": "Output Current", "cls": "current", "unit": "A", "json": True},
-    "generator/Status/Engine/Current L1": {"name": "Output Current L1", "cls": "current", "unit": "A", "json": True},
-    "generator/Status/Engine/Current L2": {"name": "Output Current L2", "cls": "current", "unit": "A", "json": True},
-    "generator/Status/Engine/Output Power (Single Phase)": {"name": "Output Power", "cls": "power", "unit": "kW", "json": True, "icon": "mdi:flash"},
+    "generator/Status/Engine/Battery Voltage": {
+        "name": "Battery Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+        "ic": "mdi:car-battery",
+    },
+    "generator/Status/Engine/Battery Charger Current": {
+        "name": "Battery Current",
+        "dev_cla": "current",
+        "unit_of_meas": "mA",
+        "json": True,
+    },
+    "generator/Status/Engine/RPM": {
+        "name": "RPM",
+        "unit_of_meas": "RPM",
+        "json": True,
+        "ic": "mdi:rotate-right",
+    },
+    "generator/Status/Engine/Frequency": {
+        "name": "Frequency",
+        "dev_cla": "frequency",
+        "unit_of_meas": "Hz",
+        "json": True,
+        "ic": "mdi:sine-wave",
+    },
+    "generator/Status/Engine/Output Voltage": {
+        "name": "Output Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+    },
+    "generator/Status/Engine/Output Current": {
+        "name": "Output Current",
+        "dev_cla": "current",
+        "unit_of_meas": "A",
+        "json": True,
+    },
+    "generator/Status/Engine/Current L1": {
+        "name": "Output Current L1",
+        "dev_cla": "current",
+        "unit_of_meas": "A",
+        "json": True,
+    },
+    "generator/Status/Engine/Current L2": {
+        "name": "Output Current L2",
+        "dev_cla": "current",
+        "unit_of_meas": "A",
+        "json": True,
+    },
+    "generator/Status/Engine/Output Power (Single Phase)": {
+        "name": "Output Power",
+        "dev_cla": "power",
+        "unit_of_meas": "kW",
+        "json": True,
+        "ic": "mdi:flash",
+    },
     "generator/Status/Engine/Switch State": {"name": "Switch State", "json": False},
-    "generator/Status/Engine/Engine State": {"name": "Engine State", "json": False, "icon": "mdi:engine"},
-
+    "generator/Status/Engine/Engine State": {
+        "name": "Engine State",
+        "json": False,
+        "ic": "mdi:engine",
+    },
     # --- Logs ---
-    "generator/Status/Last Log Entries/Logs/Alarm Log": {"name": "Last Alarm Log", "json": False, "icon": "mdi:alarm-light"},
-    "generator/Status/Last Log Entries/Logs/Run Log": {"name": "Last Action", "json": False, "icon": "mdi:motion-play-outline"},
-
+    "generator/Status/Last Log Entries/Logs/Alarm Log": {
+        "name": "Last Alarm Log",
+        "json": False,
+        "ic": "mdi:alarm-light",
+        "ent_cat": "diagnostic",
+    },
+    "generator/Status/Last Log Entries/Logs/Run Log": {
+        "name": "Last Action",
+        "json": False,
+        "ic": "mdi:motion-play-outline",
+        "ent_cat": "diagnostic",
+    },
     # --- Maintenance / Info ---
     "generator/Maintenance/Model": {"name": "Model", "json": False},
-    "generator/Maintenance/Generator Serial Number": {"name": "Serial Number", "json": False, "icon": "mdi:barcode-scan"},
-    "generator/Maintenance/Controller Detected": {"name": "Controller Detected", "json": False},
+    "generator/Maintenance/Generator Serial Number": {
+        "name": "Serial Number",
+        "json": False,
+        "ic": "mdi:barcode-scan",
+    },
+    "generator/Maintenance/Controller Detected": {
+        "name": "Controller Detected",
+        "json": False,
+    },
     "generator/Maintenance/Nominal RPM": {"name": "Nominal RPM", "json": False},
     "generator/Maintenance/Rated kW": {"name": "Capacity", "json": False},
-    "generator/Maintenance/Nominal Frequency": {"name": "Nominal Frequency", "json": False},
+    "generator/Maintenance/Nominal Frequency": {
+        "name": "Nominal Frequency",
+        "json": False,
+    },
     "generator/Maintenance/Fuel Type": {"name": "Fuel Type", "json": False},
     "generator/Maintenance/Generator Phase": {"name": "Phase", "json": False},
-    "generator/Maintenance/Engine Displacement": {"name": "Engine Displacement", "unit": "cc", "json": True},
-    "generator/Maintenance/Ambient Temperature Sensor": {"name": "Ambient Temperature", "cls": "temperature", "unit": "°F", "json": True, "icon": "mdi:thermometer"},
-
+    "generator/Maintenance/Engine Displacement": {
+        "name": "Engine Displacement",
+        "unit_of_meas": "cc",
+        "json": True,
+    },
+    "generator/Maintenance/Ambient Temperature Sensor": {
+        "name": "Ambient Temperature",
+        "dev_cla": "temperature",
+        "unit_of_meas": "°F",
+        "json": True,
+        "ic": "mdi:thermometer",
+    },
     # --- Controller Settings ---
-    "generator/Maintenance/Controller Settings/Calibrate Current 1": {"name": "Controller Calibrate Current 1", "json": True},
-    "generator/Maintenance/Controller Settings/Calibrate Current 2": {"name": "Controller Calibrate Current 2", "json": True},
-    "generator/Maintenance/Controller Settings/Calibrate Volts": {"name": "Controller Calibrate Volts", "json": True},
-    "generator/Maintenance/Controller Settings/Nominal Line Voltage": {"name": "Controller Nominal Line Voltage", "json": False},
-    "generator/Maintenance/Controller Settings/Rated Max Power": {"name": "Controller Rated Max Power", "json": False},
-    "generator/Maintenance/Controller Settings/Hours of Protection": {"name": "Hours of Protection", "cls": "duration", "unit": "h", "json": True},
-
+    "generator/Maintenance/Controller Settings/Calibrate Current 1": {
+        "name": "Controller Calibrate Current 1",
+        "json": True,
+    },
+    "generator/Maintenance/Controller Settings/Calibrate Current 2": {
+        "name": "Controller Calibrate Current 2",
+        "json": True,
+    },
+    "generator/Maintenance/Controller Settings/Calibrate Volts": {
+        "name": "Controller Calibrate Volts",
+        "json": True,
+    },
+    "generator/Maintenance/Controller Settings/Nominal Line Voltage": {
+        "name": "Controller Nominal Line Voltage",
+        "json": False,
+    },
+    "generator/Maintenance/Controller Settings/Rated Max Power": {
+        "name": "Controller Rated Max Power",
+        "json": False,
+    },
+    "generator/Maintenance/Controller Settings/Hours of Protection": {
+        "name": "Hours of Protection",
+        "dev_cla": "duration",
+        "unit_of_meas": "h",
+        "json": True,
+    },
     # --- Exercise ---
-    "generator/Maintenance/Exercise/Exercise Time": {"name": "Exercise Time", "json": False, "icon": "mdi:refresh-auto"},
-
+    "generator/Maintenance/Exercise/Exercise Time": {
+        "name": "Exercise Time",
+        "json": False,
+        "ic": "mdi:refresh-auto",
+        "ent_cat": "diagnostic",
+    },
     # --- Line Stats ---
-    "generator/Status/Line/Utility Voltage": {"name": "Line Utility Voltage", "cls": "voltage", "unit": "V", "json": True},
-    "generator/Status/Line/Utility Max Voltage": {"name": "Line Utility Max Voltage", "cls": "voltage", "unit": "V", "json": True},
-    "generator/Status/Line/Utility Min Voltage": {"name": "Line Utility Min Voltage", "cls": "voltage", "unit": "V", "json": True},
-    "generator/Status/Line/Utility Threshold Voltage": {"name": "Line Utility Threshold Voltage", "cls": "voltage", "unit": "V", "json": True},
-
+    "generator/Status/Line/Utility Voltage": {
+        "name": "Line Utility Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+    },
+    "generator/Status/Line/Utility Max Voltage": {
+        "name": "Line Utility Max Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+    },
+    "generator/Status/Line/Utility Min Voltage": {
+        "name": "Line Utility Min Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+    },
+    "generator/Status/Line/Utility Threshold Voltage": {
+        "name": "Line Utility Threshold Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
+    },
     # --- Service ---
-    "generator/Maintenance/Service/Service A Due": {"name": "Service A Due", "json": False, "icon": "mdi:tools"},
-    "generator/Maintenance/Service/Service B Due": {"name": "Service B Due", "json": False, "icon": "mdi:tools"},
-    "generator/Maintenance/Service/Battery Check Due": {"name": "Service Battery Check Due", "json": False, "icon": "mdi:car-battery"},
-    "generator/Maintenance/Service/Total Run Hours": {"name": "Total Run Time", "cls": "duration", "unit": "h", "json": True, "icon": "mdi:counter"},
-    "generator/Maintenance/Service/Hardware Version": {"name": "Hardware Version", "json": False},
-    "generator/Maintenance/Service/Firmware Version": {"name": "Firmware Version", "json": False},
-
+    "generator/Maintenance/Service/Service A Due": {
+        "name": "Service A Due",
+        "json": False,
+        "ic": "mdi:tools",
+        "ent_cat": "diagnostic",
+    },
+    "generator/Maintenance/Service/Service B Due": {
+        "name": "Service B Due",
+        "json": False,
+        "ic": "mdi:tools",
+        "ent_cat": "diagnostic",
+    },
+    "generator/Maintenance/Service/Battery Check Due": {
+        "name": "Service Battery Check Due",
+        "json": False,
+        "ic": "mdi:car-battery",
+        "ent_cat": "diagnostic",
+    },
+    "generator/Maintenance/Service/Total Run Hours": {
+        "name": "Total Run Time",
+        "dev_cla": "duration",
+        "unit_of_meas": "h",
+        "json": True,
+        "ic": "mdi:counter",
+    },
+    "generator/Maintenance/Service/Hardware Version": {
+        "name": "Hardware Version",
+        "json": False,
+    },
+    "generator/Maintenance/Service/Firmware Version": {
+        "name": "Firmware Version",
+        "json": False,
+    },
     # --- Consumption ---
-    "generator/Maintenance/kW Hours in last 30 days": {"name": "Energy Used Last 30 Days", "cls": "energy", "unit": "kWh", "json": True, "icon": "mdi:lightning-bolt"},
-    "generator/Maintenance/Fuel Consumption in last 30 days": {"name": "Fuel Consumption Last 30 Days", "cls": "volume", "unit": "gal", "json": True, "icon": "mdi:fuel"},
-    "generator/Maintenance/Run Hours in last 30 days": {"name": "Run Hours Last 30 Days", "cls": "duration", "unit": "h", "json": True},
+    "generator/Maintenance/kW Hours in last 30 days": {
+        "name": "Energy Used Last 30 Days",
+        "dev_cla": "energy",
+        "unit_of_meas": "kWh",
+        "json": True,
+        "ic": "mdi:lightning-bolt",
+    },
+    "generator/Maintenance/Fuel Consumption in last 30 days": {
+        "name": "Fuel Consumption Last 30 Days",
+        "dev_cla": "volume",
+        "unit_of_meas": "gal",
+        "json": True,
+        "ic": "mdi:fuel",
+    },
+    "generator/Maintenance/Run Hours in last 30 days": {
+        "name": "Run Hours Last 30 Days",
+        "dev_cla": "duration",
+        "unit_of_meas": "h",
+        "json": True,
+    },
 }
 
 
@@ -804,20 +1005,12 @@ class MyMQTT(MyCommon):
             component_key = _CleanString(sub_topic)
             component_config = {
                 "p": "sensor",
-                "name": meta['name'],
                 "uniq_id": f"{device_id}_{component_key}",
                 "stat_t": self.AppendRoot(sub_topic),
             }
-
-            if "cls" in meta:
-                component_config["dev_cla"] = meta["cls"]
-            if "unit" in meta:
-                component_config["unit_of_meas"] = meta["unit"]
-            if "icon" in meta:
-                component_config["ic"] = meta["icon"]
-            if meta.get("json", False):
+            if meta.pop("json", False):
                 component_config["val_tpl"] = "{{ value_json.value }}"
-
+            component_config.update(meta)
             components[component_key] = component_config
 
         payload = {
