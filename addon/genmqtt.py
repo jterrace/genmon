@@ -119,6 +119,7 @@ HA_SENSOR_MAP = {
     "generator/Status/Engine/Battery Charger Current": {
         "name": "Battery Current",
         "dev_cla": "current",
+        "ic": "mdi:car-battery",
         "unit_of_meas": "mA",
         "json": True,
     },
