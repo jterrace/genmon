@@ -113,7 +113,7 @@ HA_SENSOR_MAP = {
         "name": "Battery Voltage",
         "dev_cla": "voltage",
         "unit_of_meas": "V",
-        "suggested_display_precision": 4,
+        "sug_dsp_prc": 1,
         "json": True,
         "ic": "mdi:car-battery",
     },
