@@ -63,7 +63,129 @@ OFFLINE_PAYLOAD = "Offline"
 # This is likely an incomplete list because it was created by jterrace@ based on a Generac evolution controller.
 # If other people use this, additional topics should be added if found for other controllers.
 HA_SENSOR_MAP = {
-    # --- Status & Outage ---
+    # keep-sorted start block=yes
+    "generator/Maintenance/Ambient Temperature Sensor": {
+        "name": "Ambient Temperature",
+        "dev_cla": "temperature",
+        "unit_of_meas": "°F",
+        "json": True,
+        "ic": "mdi:thermometer",
+    },
+    "generator/Maintenance/Controller Detected": {
+        "name": "Controller Detected",
+    },
+    "generator/Status/Time/Monitor Time": {
+        "name": "Genmon Clock",
+        "dev_cla": "timestamp",
+        "genmon": True,
+    },
+    "generator/Maintenance/Controller Settings/Calibrate Current 1": {
+        "name": "Controller Calibrate Current 1",
+        "json": True,
+    },
+    "generator/Maintenance/Controller Settings/Calibrate Current 2": {
+        "name": "Controller Calibrate Current 2",
+        "json": True,
+    },
+    "generator/Maintenance/Controller Settings/Calibrate Volts": {
+        "name": "Controller Calibrate Volts",
+        "json": True,
+    },
+    "generator/Maintenance/Controller Settings/Hours of Protection": {
+        "name": "Hours of Protection",
+        "dev_cla": "duration",
+        "unit_of_meas": "h",
+        "json": True,
+    },
+    "generator/Maintenance/Controller Settings/Nominal Line Voltage": {
+        "name": "Controller Nominal Line Voltage",
+    },
+    "generator/Maintenance/Controller Settings/Rated Max Power": {
+        "name": "Controller Rated Max Power",
+    },
+    "generator/Maintenance/Engine Displacement": {
+        "name": "Engine Displacement",
+        "unit_of_meas": "cc",
+        "json": True,
+    },
+    "generator/Status/Engine/Active Rotor Poles (Calculated)": {
+        "name": "Active Rotor Poles (Calculated)",
+        "json": True,
+    },
+    "generator/Status/Engine/Generator State": {
+        "name": "Generator State",
+    },
+    "generator/Maintenance/Exercise/Exercise Time": {
+        "name": "Exercise Time",
+        "ic": "mdi:refresh-auto",
+        "ent_cat": "diagnostic",
+    },
+    "generator/Maintenance/Fuel Consumption in last 30 days": {
+        "name": "Fuel Consumption Last 30 Days",
+        "dev_cla": "volume",
+        "unit_of_meas": "gal",
+        "json": True,
+        "ic": "mdi:fuel",
+    },
+    "generator/Maintenance/Fuel Type": {"name": "Fuel Type"},
+    "generator/Maintenance/Generator Phase": {"name": "Phase"},
+    "generator/Maintenance/Generator Serial Number": {
+        "name": "Serial Number",
+        "ic": "mdi:barcode-scan",
+    },
+    "generator/Maintenance/Model": {"name": "Model"},
+    "generator/Maintenance/Nominal Frequency": {
+        "name": "Nominal Frequency",
+    },
+    "generator/Maintenance/Nominal RPM": {"name": "Nominal RPM"},
+    "generator/Maintenance/Rated kW": {"name": "Capacity"},
+    "generator/Maintenance/Run Hours in last 30 days": {
+        "name": "Run Hours Last 30 Days",
+        "dev_cla": "duration",
+        "unit_of_meas": "h",
+        "json": True,
+    },
+    "generator/Maintenance/Service/Battery Check Due": {
+        "name": "Service Battery Check Due",
+        "ic": "mdi:car-battery",
+        "ent_cat": "diagnostic",
+    },
+    "generator/Maintenance/Service/Firmware Version": {
+        "name": "Firmware Version",
+    },
+    "generator/Maintenance/Service/Hardware Version": {
+        "name": "Hardware Version",
+    },
+    "generator/Maintenance/Service/Service A Due": {
+        "name": "Service A Due",
+        "ic": "mdi:tools",
+        "ent_cat": "diagnostic",
+    },
+    "generator/Maintenance/Service/Service B Due": {
+        "name": "Service B Due",
+        "ic": "mdi:tools",
+        "ent_cat": "diagnostic",
+    },
+    "generator/Maintenance/Service/Total Run Hours": {
+        "name": "Total Run Time",
+        "dev_cla": "duration",
+        "unit_of_meas": "h",
+        "json": True,
+        "ic": "mdi:counter",
+    },
+    "generator/Maintenance/kW Hours in last 30 days": {
+        "name": "Energy Used Last 30 Days",
+        "dev_cla": "energy",
+        "unit_of_meas": "kWh",
+        "json": True,
+        "ic": "mdi:lightning-bolt",
+    },
+    "generator/Outage/Startup Delay": {
+        "name": "Outage Startup Delay",
+        "dev_cla": "duration",
+        "unit_of_meas": "s",
+        "json": True,
+    },
     "generator/Outage/Status": {
         "name": "Outage Status",
         "ic": "mdi:weather-lightning",
@@ -72,20 +194,8 @@ HA_SENSOR_MAP = {
         "name": "System In Outage",
         "ic": "mdi:weather-lightning",
     },
-    "generator/Outage/Utility Voltage": {
-        "name": "Outage Utility Voltage",
-        "dev_cla": "voltage",
-        "unit_of_meas": "V",
-        "json": True,
-    },
-    "generator/Outage/Utility Voltage Minimum": {
-        "name": "Outage Utility Min Voltage",
-        "dev_cla": "voltage",
-        "unit_of_meas": "V",
-        "json": True,
-    },
-    "generator/Outage/Utility Voltage Maximum": {
-        "name": "Outage Utility Max Voltage",
+    "generator/Outage/Utility Pickup Voltage": {
+        "name": "Outage Utility Pickup Voltage",
         "dev_cla": "voltage",
         "unit_of_meas": "V",
         "json": True,
@@ -96,26 +206,23 @@ HA_SENSOR_MAP = {
         "unit_of_meas": "V",
         "json": True,
     },
-    "generator/Outage/Utility Pickup Voltage": {
-        "name": "Outage Utility Pickup Voltage",
+    "generator/Outage/Utility Voltage Maximum": {
+        "name": "Outage Utility Max Voltage",
         "dev_cla": "voltage",
         "unit_of_meas": "V",
         "json": True,
     },
-    "generator/Outage/Startup Delay": {
-        "name": "Outage Startup Delay",
-        "dev_cla": "duration",
-        "unit_of_meas": "s",
-        "json": True,
-    },
-    # --- Engine Status ---
-    "generator/Status/Engine/Battery Voltage": {
-        "name": "Battery Voltage",
+    "generator/Outage/Utility Voltage Minimum": {
+        "name": "Outage Utility Min Voltage",
         "dev_cla": "voltage",
         "unit_of_meas": "V",
-        "sug_dsp_prc": 1,
         "json": True,
-        "ic": "mdi:car-battery",
+    },
+    "generator/Outage/Utility Voltage": {
+        "name": "Outage Utility Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
     },
     "generator/Status/Engine/Battery Charger Current": {
         "name": "Battery Current",
@@ -123,30 +230,13 @@ HA_SENSOR_MAP = {
         "unit_of_meas": "mA",
         "json": True,
     },
-    "generator/Status/Engine/RPM": {
-        "name": "RPM",
-        "unit_of_meas": "RPM",
-        "json": True,
-        "ic": "mdi:rotate-right",
-    },
-    "generator/Status/Engine/Frequency": {
-        "name": "Frequency",
-        "dev_cla": "frequency",
-        "unit_of_meas": "Hz",
-        "json": True,
-        "ic": "mdi:sine-wave",
-    },
-    "generator/Status/Engine/Output Voltage": {
-        "name": "Output Voltage",
+    "generator/Status/Engine/Battery Voltage": {
+        "name": "Battery Voltage",
         "dev_cla": "voltage",
         "unit_of_meas": "V",
+        "sug_dsp_prc": 1,
         "json": True,
-    },
-    "generator/Status/Engine/Output Current": {
-        "name": "Output Current",
-        "dev_cla": "current",
-        "unit_of_meas": "A",
-        "json": True,
+        "ic": "mdi:car-battery",
     },
     "generator/Status/Engine/Current L1": {
         "name": "Output Current L1",
@@ -160,6 +250,23 @@ HA_SENSOR_MAP = {
         "unit_of_meas": "A",
         "json": True,
     },
+    "generator/Status/Engine/Engine State": {
+        "name": "Engine State",
+        "ic": "mdi:engine",
+    },
+    "generator/Status/Engine/Frequency": {
+        "name": "Frequency",
+        "dev_cla": "frequency",
+        "unit_of_meas": "Hz",
+        "json": True,
+        "ic": "mdi:sine-wave",
+    },
+    "generator/Status/Engine/Output Current": {
+        "name": "Output Current",
+        "dev_cla": "current",
+        "unit_of_meas": "A",
+        "json": True,
+    },
     "generator/Status/Engine/Output Power (Single Phase)": {
         "name": "Output Power",
         "dev_cla": "power",
@@ -167,12 +274,23 @@ HA_SENSOR_MAP = {
         "json": True,
         "ic": "mdi:flash",
     },
-    "generator/Status/Engine/Switch State": {"name": "Switch State"},
-    "generator/Status/Engine/Engine State": {
-        "name": "Engine State",
-        "ic": "mdi:engine",
+    "generator/Status/Engine/Output Voltage": {
+        "name": "Output Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
+        "json": True,
     },
-    # --- Logs ---
+    "generator/Status/Engine/RPM": {
+        "name": "RPM",
+        "unit_of_meas": "RPM",
+        "json": True,
+        "ic": "mdi:rotate-right",
+    },
+    "generator/Status/Engine/Switch State": {
+        "name": "Switch State",
+        "ent_cat": "diagnostic",
+        "ic": "mdi:home-switch",
+    },
     "generator/Status/Last Log Entries/Logs/Alarm Log": {
         "name": "Last Alarm Log",
         "ic": "mdi:alarm-light",
@@ -182,72 +300,6 @@ HA_SENSOR_MAP = {
         "name": "Last Action",
         "ic": "mdi:motion-play-outline",
         "ent_cat": "diagnostic",
-    },
-    # --- Maintenance / Info ---
-    "generator/Maintenance/Model": {"name": "Model"},
-    "generator/Maintenance/Generator Serial Number": {
-        "name": "Serial Number",
-        "ic": "mdi:barcode-scan",
-    },
-    "generator/Maintenance/Controller Detected": {
-        "name": "Controller Detected",
-    },
-    "generator/Maintenance/Nominal RPM": {"name": "Nominal RPM"},
-    "generator/Maintenance/Rated kW": {"name": "Capacity"},
-    "generator/Maintenance/Nominal Frequency": {
-        "name": "Nominal Frequency",
-    },
-    "generator/Maintenance/Fuel Type": {"name": "Fuel Type"},
-    "generator/Maintenance/Generator Phase": {"name": "Phase"},
-    "generator/Maintenance/Engine Displacement": {
-        "name": "Engine Displacement",
-        "unit_of_meas": "cc",
-        "json": True,
-    },
-    "generator/Maintenance/Ambient Temperature Sensor": {
-        "name": "Ambient Temperature",
-        "dev_cla": "temperature",
-        "unit_of_meas": "°F",
-        "json": True,
-        "ic": "mdi:thermometer",
-    },
-    # --- Controller Settings ---
-    "generator/Maintenance/Controller Settings/Calibrate Current 1": {
-        "name": "Controller Calibrate Current 1",
-        "json": True,
-    },
-    "generator/Maintenance/Controller Settings/Calibrate Current 2": {
-        "name": "Controller Calibrate Current 2",
-        "json": True,
-    },
-    "generator/Maintenance/Controller Settings/Calibrate Volts": {
-        "name": "Controller Calibrate Volts",
-        "json": True,
-    },
-    "generator/Maintenance/Controller Settings/Nominal Line Voltage": {
-        "name": "Controller Nominal Line Voltage",
-    },
-    "generator/Maintenance/Controller Settings/Rated Max Power": {
-        "name": "Controller Rated Max Power",
-    },
-    "generator/Maintenance/Controller Settings/Hours of Protection": {
-        "name": "Hours of Protection",
-        "dev_cla": "duration",
-        "unit_of_meas": "h",
-        "json": True,
-    },
-    # --- Exercise ---
-    "generator/Maintenance/Exercise/Exercise Time": {
-        "name": "Exercise Time",
-        "ic": "mdi:refresh-auto",
-        "ent_cat": "diagnostic",
-    },
-    # --- Line Stats ---
-    "generator/Status/Line/Utility Voltage": {
-        "name": "Line Utility Voltage",
-        "dev_cla": "voltage",
-        "unit_of_meas": "V",
-        "json": True,
     },
     "generator/Status/Line/Utility Max Voltage": {
         "name": "Line Utility Max Voltage",
@@ -267,56 +319,13 @@ HA_SENSOR_MAP = {
         "unit_of_meas": "V",
         "json": True,
     },
-    # --- Service ---
-    "generator/Maintenance/Service/Service A Due": {
-        "name": "Service A Due",
-        "ic": "mdi:tools",
-        "ent_cat": "diagnostic",
-    },
-    "generator/Maintenance/Service/Service B Due": {
-        "name": "Service B Due",
-        "ic": "mdi:tools",
-        "ent_cat": "diagnostic",
-    },
-    "generator/Maintenance/Service/Battery Check Due": {
-        "name": "Service Battery Check Due",
-        "ic": "mdi:car-battery",
-        "ent_cat": "diagnostic",
-    },
-    "generator/Maintenance/Service/Total Run Hours": {
-        "name": "Total Run Time",
-        "dev_cla": "duration",
-        "unit_of_meas": "h",
-        "json": True,
-        "ic": "mdi:counter",
-    },
-    "generator/Maintenance/Service/Hardware Version": {
-        "name": "Hardware Version",
-    },
-    "generator/Maintenance/Service/Firmware Version": {
-        "name": "Firmware Version",
-    },
-    # --- Consumption ---
-    "generator/Maintenance/kW Hours in last 30 days": {
-        "name": "Energy Used Last 30 Days",
-        "dev_cla": "energy",
-        "unit_of_meas": "kWh",
-        "json": True,
-        "ic": "mdi:lightning-bolt",
-    },
-    "generator/Maintenance/Fuel Consumption in last 30 days": {
-        "name": "Fuel Consumption Last 30 Days",
-        "dev_cla": "volume",
-        "unit_of_meas": "gal",
-        "json": True,
-        "ic": "mdi:fuel",
-    },
-    "generator/Maintenance/Run Hours in last 30 days": {
-        "name": "Run Hours Last 30 Days",
-        "dev_cla": "duration",
-        "unit_of_meas": "h",
+    "generator/Status/Line/Utility Voltage": {
+        "name": "Line Utility Voltage",
+        "dev_cla": "voltage",
+        "unit_of_meas": "V",
         "json": True,
     },
+    # keep-sorted end
 }
 
 
@@ -993,6 +1002,7 @@ class MyMQTT(MyCommon):
                 "uniq_id": f"{device_id}_{component_key}",
                 "stat_t": self.AppendRoot(sub_topic),
             }
+            meta.pop("genmon", False)  # TODO
             if meta.pop("json", False):
                 component_config["val_tpl"] = "{{ value_json.value }}"
             component_config.update(meta)
