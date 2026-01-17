@@ -323,8 +323,8 @@ HA_SENSOR_MAP = {
     "generator/Status/Time/Generator Time": {
         "name": "Generator Clock",
         "dev_cla": "timestamp",
-        "val_tpl": "{{ (strptime(value, '%A %B %d, %Y %H:%M:%S') | as_local).isoformat() }}",
-        # "en": "false",
+        "val_tpl": "{{ (strptime(value, '%A %B %d, %Y %H:%M') | as_local).isoformat() }}",
+        "en": "false",
     },
     "generator/Status/Time/Monitor Time": {
         "name": "Genmon Clock",
