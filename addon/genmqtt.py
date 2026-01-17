@@ -74,13 +74,6 @@ HA_SENSOR_MAP = {
     "generator/Maintenance/Controller Detected": {
         "name": "Controller Detected",
     },
-    "generator/Status/Time/Monitor Time": {
-        "name": "Genmon Clock",
-        "dev_cla": "timestamp",
-        "val_tpl": "{{ (strptime(value, '%A %B %d, %Y %H:%M:%S') | as_local).isoformat() }}",
-        "en": "false",
-        "genmon": True,
-    },
     "generator/Maintenance/Controller Settings/Calibrate Current 1": {
         "name": "Controller Calibrate Current 1",
         "json": True,
@@ -109,13 +102,6 @@ HA_SENSOR_MAP = {
         "name": "Engine Displacement",
         "unit_of_meas": "cc",
         "json": True,
-    },
-    "generator/Status/Engine/Active Rotor Poles (Calculated)": {
-        "name": "Active Rotor Poles (Calculated)",
-        "json": True,
-    },
-    "generator/Status/Engine/Generator State": {
-        "name": "Generator State",
     },
     "generator/Maintenance/Exercise/Exercise Time": {
         "name": "Exercise Time",
@@ -226,6 +212,10 @@ HA_SENSOR_MAP = {
         "unit_of_meas": "V",
         "json": True,
     },
+    "generator/Status/Engine/Active Rotor Poles (Calculated)": {
+        "name": "Active Rotor Poles (Calculated)",
+        "json": True,
+    },
     "generator/Status/Engine/Battery Charger Current": {
         "name": "Battery Current",
         "dev_cla": "current",
@@ -262,6 +252,9 @@ HA_SENSOR_MAP = {
         "unit_of_meas": "Hz",
         "json": True,
         "ic": "mdi:sine-wave",
+    },
+    "generator/Status/Engine/Generator State": {
+        "name": "Generator State",
     },
     "generator/Status/Engine/Output Current": {
         "name": "Output Current",
@@ -326,6 +319,13 @@ HA_SENSOR_MAP = {
         "dev_cla": "voltage",
         "unit_of_meas": "V",
         "json": True,
+    },
+    "generator/Status/Time/Monitor Time": {
+        "name": "Genmon Clock",
+        "dev_cla": "timestamp",
+        "val_tpl": "{{ (strptime(value, '%A %B %d, %Y %H:%M:%S') | as_local).isoformat() }}",
+        "en": "false",
+        "genmon": True,
     },
     # keep-sorted end
 }
