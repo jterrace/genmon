@@ -77,7 +77,7 @@ HA_SENSOR_MAP = {
     "generator/Status/Time/Monitor Time": {
         "name": "Genmon Clock",
         "dev_cla": "timestamp",
-        "val_tpl": "{{ strptime(value, '%A %B %d, %Y %H:%M:%S') | as_local | isoformat }}",
+        "val_tpl": "{{ (strptime(value, '%A %B %d, %Y %H:%M:%S') | as_local).isoformat() }}",
         "genmon": True,
     },
     "generator/Maintenance/Controller Settings/Calibrate Current 1": {
